@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useIPC } from './hooks/useIPC';
+import { AnalysisView } from './components/AnalysisView';
 import './styles/App.css';
+
+type ViewType = 'home' | 'analysis';
 
 export const App: React.FC = () => {
   const { process, engine, events } = useIPC();
+  const [currentView, setCurrentView] = useState<ViewType>('home');
   const [engineStatus, setEngineStatus] = useState<string>('unknown');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [processingProgress, setProcessingProgress] = useState<number>(0);
