@@ -16,6 +16,9 @@ tensorflow>=2.13.0  # Optional: if using TensorFlow models
 # Scripting
 lupa>=2.0.0  # Lua interpreter for script processing
 
+# OCR (optional for game analysis)
+paddleocr>=2.7.0.3  # Optional: for game video text extraction
+
 # Utilities
 Pillow>=10.0.0
 requests>=2.31.0
