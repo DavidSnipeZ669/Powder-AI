@@ -214,6 +214,107 @@ class PythonEngine:
             logger.error(f'Error in model:list: {e}', exc_info=True)
             self.send_response(request_id, error=str(e))
 
+    def cmd_script_execute(self, args: Dict[str, Any], request_id: str) -> None:
+        """Handle script:execute command - Execute a Lua script."""
+        try:
+            if not self.lua_processor:
+                self.send_response(request_id, error='Lua processor not available')
+                return
+
+            script = args.get('script')
+            context = args.get('context', {})
+            mode = args.get('mode', 'standard')
+
+            if not script:
+                self.send_response(request_id, error='Missing script parameter')
+                return
+
+            logger.info(f'Executing Lua script ({len(script)} chars)')
+
+            # Execute script
+            result = self.lua_processor.execute(script, context=context)
+
+            if result['success']:
+                self.send_response(request_id, result={
+                    'output': result['result'],
+                    'status': 'success',
+                })
+            else:
+                self.send_response(request_id, error=result['error'])
+
+        except Exception as e:
+            logger.error(f'Error in script:execute: {e}', exc_info=True)
+            self.send_response(request_id, error=str(e))
+
+    def cmd_script_eval(self, args: Dict[str, Any], request_id: str) -> None:
+        """Handle script:eval command - Evaluate a Lua expression."""
+        try:
+            if not self.lua_processor:
+                self.send_response(request_id, error='Lua processor not available')
+                return
+
+            expression = args.get('expression')
+            context = args.get('context', {})
+
+            if not expression:
+                self.send_response(request_id, error='Missing expression parameter')
+                return
+
+            logger.info(f'Evaluating Lua expression: {expression[:50]}...')
+
+            # Evaluate expression
+            result = self.lua_processor.eval(expression, context=context)
+
+            if result['success']:
+                self.send_response(request_id, result={
+                    'value': result['result'],
+                    'status': 'success',
+                })
+            else:
+                self.send_response(request_id, error=result['error'])
+
+        except Exception as e:
+            logger.error(f'Error in script:eval: {e}', exc_info=True)
+            self.send_response(request_id, error=str(e))
+
+    def cmd_script_call(self, args: Dict[str, Any], request_id: str) -> None:
+        """Handle script:call command - Call a Lua function."""
+        try:
+            if not self.lua_processor:
+                self.send_response(request_id, error='Lua processor not available')
+                return
+
+            script = args.get('script')
+            function_name = args.get('function')
+            func_args = args.get('args', [])
+            context = args.get('context', {})
+
+            if not script or not function_name:
+                self.send_response(request_id, error='Missing script or function parameter')
+                return
+
+            logger.info(f'Calling Lua function: {function_name}')
+
+            # Call function
+            result = self.lua_processor.call_function(
+                script,
+                function_name,
+                args=func_args,
+                context=context
+            )
+
+            if result['success']:
+                self.send_response(request_id, result={
+                    'output': result['result'],
+                    'status': 'success',
+                })
+            else:
+                self.send_response(request_id, error=result['error'])
+
+        except Exception as e:
+            logger.error(f'Error in script:call: {e}', exc_info=True)
+            self.send_response(request_id, error=str(e))
+
     def run(self) -> None:
         """Main engine loop - read commands from stdin."""
         logger.info('Python engine started, waiting for commands')
