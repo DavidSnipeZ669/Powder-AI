@@ -13,6 +13,9 @@ scikit-learn>=1.3.0
 # Model frameworks
 tensorflow>=2.13.0  # Optional: if using TensorFlow models
 
+# Scripting
+lupa>=2.0.0  # Lua interpreter for script processing
+
 # Utilities
 Pillow>=10.0.0
 requests>=2.31.0
