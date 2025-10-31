@@ -41,6 +41,15 @@ class PythonEngine:
         """Initialize the engine."""
         self.is_running = True
         self.active_tasks: Dict[str, Any] = {}
+
+        # Initialize Lua processor
+        try:
+            self.lua_processor = LuaProcessor(mode=LuaExecutionMode.EXTENDED)
+            logger.info('Lua processor initialized')
+        except Exception as e:
+            logger.warning(f'Lua processor initialization failed: {e}. Lua scripts will not be available.')
+            self.lua_processor = None
+
         logger.info('Python engine initialized')
 
     def send_response(self, request_id: str, result: Optional[Dict[str, Any]] = None,
