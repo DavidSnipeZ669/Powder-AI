@@ -66,6 +66,9 @@ export async function initializeDatabase(): Promise<Database.Database> {
   // Create tables
   createTables(db);
 
+  // Run migrations
+  runMigrations(db);
+
   logger.info('Database initialized successfully');
 
   return db;
