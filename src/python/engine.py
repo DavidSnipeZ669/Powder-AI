@@ -14,8 +14,9 @@ from datetime import datetime
 import os
 from pathlib import Path
 
-# Import Lua processor
+# Import Lua processor and game analyzer
 from processors.lua_processor import LuaProcessor, LuaExecutionMode
+from processors.game_analyzer import GameAnalyzer
 
 # Setup logging
 log_dir = Path.home() / '.powder-ai' / 'logs'
