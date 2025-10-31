@@ -58,6 +58,7 @@ interface PowderAPI {
   model: ModelAPI;
   engine: EngineAPI;
   script: ScriptAPI;
+  game: GameAPI;
   events: EventAPI;
 }
 
