@@ -2,16 +2,16 @@
   "name": "powder-ai",
   "version": "0.1.0",
   "description": "Cross-platform desktop application for media processing and AI model inference",
-  "main": "src/electron/main.ts",
+  "main": "build/electron/main.js",
   "homepage": "./",
-  "type": "module",
   "scripts": {
-    "dev": "electron-dev",
+    "dev": "tsc && electron .",
     "build": "tsc && electron-builder",
     "start": "npm run dev",
     "typecheck": "tsc --noEmit",
     "lint": "eslint src --ext .ts,.tsx",
-    "test": "jest"
+    "test": "jest",
+    "dist": "npm run build && electron-builder"
   },
   "dependencies": {
     "react": "^18.2.0",
