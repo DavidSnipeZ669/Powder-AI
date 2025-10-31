@@ -161,6 +161,7 @@ export const App: React.FC = () => {
             <li>Status: Engine {engineStatus}</li>
           </ul>
         </section>
+        )}
       </main>
 
       <footer className="app-footer">
