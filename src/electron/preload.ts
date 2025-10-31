@@ -81,6 +81,10 @@ const api: PowderAPI = {
     eval: (args) => ipcRenderer.invoke('script:eval', args),
     call: (args) => ipcRenderer.invoke('script:call', args),
   },
+  game: {
+    analyze: (args) => ipcRenderer.invoke('game:analyze', args),
+    list: () => ipcRenderer.invoke('game:list'),
+  },
   events: {
     onProgressUpdate: (callback) => {
       const listener = (_event: IpcRendererEvent, data: any) => {
