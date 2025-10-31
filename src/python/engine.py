@@ -94,6 +94,12 @@ class PythonEngine:
                 self.cmd_model_load(args, request_id)
             elif command == 'model:list':
                 self.cmd_model_list(args, request_id)
+            elif command == 'script:execute':
+                self.cmd_script_execute(args, request_id)
+            elif command == 'script:eval':
+                self.cmd_script_eval(args, request_id)
+            elif command == 'script:call':
+                self.cmd_script_call(args, request_id)
             else:
                 error_msg = f'Unknown command: {command}'
                 logger.warning(error_msg)
