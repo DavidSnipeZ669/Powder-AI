@@ -52,6 +52,7 @@ interface PowderAPI {
   process: ProcessAPI;
   model: ModelAPI;
   engine: EngineAPI;
+  script: ScriptAPI;
   events: EventAPI;
 }
 
