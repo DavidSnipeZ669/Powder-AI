@@ -320,6 +320,70 @@ class PythonEngine:
             logger.error(f'Error in script:call: {e}', exc_info=True)
             self.send_response(request_id, error=str(e))
 
+    def cmd_game_analyze(self, args: Dict[str, Any], request_id: str) -> None:
+        """Handle game:analyze command - Analyze a game video."""
+        try:
+            video_path = args.get('video_path')
+            game_id = args.get('game_id', 'DF')
+
+            if not video_path:
+                self.send_response(request_id, error='Missing video_path parameter')
+                return
+
+            if not os.path.exists(video_path):
+                self.send_response(request_id, error=f'Video file not found: {video_path}')
+                return
+
+            logger.info(f'Starting game analysis: {game_id} on {video_path}')
+
+            # Send progress event
+            self.send_event('progress', {'percent': 0, 'message': 'Initializing analyzer'})
+
+            # Create analyzer
+            analyzer = GameAnalyzer(game_id, self.lua_processor)
+
+            # Analyze video
+            result = analyzer.analyze_video(video_path)
+
+            # Cleanup
+            analyzer.cleanup()
+
+            if result['success']:
+                logger.info(f'Analysis complete: {result["events_found"]} events found')
+                self.send_response(request_id, result=result)
+            else:
+                self.send_response(request_id, error=result.get('error', 'Analysis failed'))
+
+            # Send completion event
+            self.send_event('task_completed', {
+                'task_id': request_id,
+                'status': 'completed',
+                'events': result.get('events', [])
+            })
+
+        except Exception as e:
+            logger.error(f'Error in game:analyze: {e}', exc_info=True)
+            self.send_response(request_id, error=str(e))
+
+    def cmd_game_list(self, args: Dict[str, Any], request_id: str) -> None:
+        """Handle game:list command - List available games."""
+        try:
+            from processors.game_analyzer import GameScriptLoader
+
+            logger.info('Listing available games')
+
+            loader = GameScriptLoader()
+            games = loader.get_available_games()
+
+            self.send_response(request_id, result={
+                'games': games,
+                'count': len(games)
+            })
+
+        except Exception as e:
+            logger.error(f'Error in game:list: {e}', exc_info=True)
+            self.send_response(request_id, error=str(e))
+
     def run(self) -> None:
         """Main engine loop - read commands from stdin."""
         logger.info('Python engine started, waiting for commands')
