@@ -23,6 +23,9 @@ export const IPC_COMMANDS = {
   MODEL_LIST: 'model:list',
   ENGINE_STATUS: 'engine:status',
   ENGINE_RESTART: 'engine:restart',
+  SCRIPT_EXECUTE: 'script:execute',
+  SCRIPT_EVAL: 'script:eval',
+  SCRIPT_CALL: 'script:call',
 } as const;
 
 /**
