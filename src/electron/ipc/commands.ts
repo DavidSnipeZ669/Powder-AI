@@ -230,4 +230,48 @@ export function registerCommandHandlers(): void {
       }
     }
   );
+
+  // Game: Analyze a game video
+  ipcMain.handle(
+    IPC_COMMANDS.GAME_ANALYZE,
+    async (event: IpcMainInvokeEvent, args: Record<string, any>) => {
+      try {
+        logger.info('IPC command received', {
+          command: IPC_COMMANDS.GAME_ANALYZE,
+          game_id: args.game_id,
+          video_path: args.video_path?.substring(0, 50),
+        });
+
+        const result = await pythonBridge.sendCommand('game:analyze', args);
+        return { success: true, data: result };
+      } catch (error) {
+        logger.error('IPC command error', {
+          command: IPC_COMMANDS.GAME_ANALYZE,
+          error: (error as Error).message,
+        });
+        throw error;
+      }
+    }
+  );
+
+  // Game: List available games
+  ipcMain.handle(
+    IPC_COMMANDS.GAME_LIST,
+    async (event: IpcMainInvokeEvent) => {
+      try {
+        logger.info('IPC command received', {
+          command: IPC_COMMANDS.GAME_LIST,
+        });
+
+        const result = await pythonBridge.sendCommand('game:list', {});
+        return { success: true, data: result };
+      } catch (error) {
+        logger.error('IPC command error', {
+          command: IPC_COMMANDS.GAME_LIST,
+          error: (error as Error).message,
+        });
+        throw error;
+      }
+    }
+  );
 }
