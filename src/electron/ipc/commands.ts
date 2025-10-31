@@ -162,4 +162,70 @@ export function registerCommandHandlers(): void {
       }
     }
   );
+
+  // Script: Execute a Lua script
+  ipcMain.handle(
+    IPC_COMMANDS.SCRIPT_EXECUTE,
+    async (event: IpcMainInvokeEvent, args: Record<string, any>) => {
+      try {
+        logger.info('IPC command received', {
+          command: IPC_COMMANDS.SCRIPT_EXECUTE,
+          scriptLength: args.script?.length || 0,
+        });
+
+        const result = await pythonBridge.sendCommand('script:execute', args);
+        return { success: true, data: result };
+      } catch (error) {
+        logger.error('IPC command error', {
+          command: IPC_COMMANDS.SCRIPT_EXECUTE,
+          error: (error as Error).message,
+        });
+        throw error;
+      }
+    }
+  );
+
+  // Script: Evaluate a Lua expression
+  ipcMain.handle(
+    IPC_COMMANDS.SCRIPT_EVAL,
+    async (event: IpcMainInvokeEvent, args: Record<string, any>) => {
+      try {
+        logger.info('IPC command received', {
+          command: IPC_COMMANDS.SCRIPT_EVAL,
+          expression: args.expression?.substring(0, 50),
+        });
+
+        const result = await pythonBridge.sendCommand('script:eval', args);
+        return { success: true, data: result };
+      } catch (error) {
+        logger.error('IPC command error', {
+          command: IPC_COMMANDS.SCRIPT_EVAL,
+          error: (error as Error).message,
+        });
+        throw error;
+      }
+    }
+  );
+
+  // Script: Call a Lua function
+  ipcMain.handle(
+    IPC_COMMANDS.SCRIPT_CALL,
+    async (event: IpcMainInvokeEvent, args: Record<string, any>) => {
+      try {
+        logger.info('IPC command received', {
+          command: IPC_COMMANDS.SCRIPT_CALL,
+          function: args.function,
+        });
+
+        const result = await pythonBridge.sendCommand('script:call', args);
+        return { success: true, data: result };
+      } catch (error) {
+        logger.error('IPC command error', {
+          command: IPC_COMMANDS.SCRIPT_CALL,
+          error: (error as Error).message,
+        });
+        throw error;
+      }
+    }
+  );
 }
