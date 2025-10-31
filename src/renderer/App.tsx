@@ -84,6 +84,20 @@ export const App: React.FC = () => {
     <div className="app-container">
       <header className="app-header">
         <h1>Powder-AI</h1>
+        <nav className="app-nav">
+          <button
+            className={`nav-button ${currentView === 'home' ? 'active' : ''}`}
+            onClick={() => setCurrentView('home')}
+          >
+            Home
+          </button>
+          <button
+            className={`nav-button ${currentView === 'analysis' ? 'active' : ''}`}
+            onClick={() => setCurrentView('analysis')}
+          >
+            Game Analysis
+          </button>
+        </nav>
         <div className="status-indicator">
           <span
             className={`status-badge status-${engineStatus}`}
@@ -94,6 +108,8 @@ export const App: React.FC = () => {
       </header>
 
       <main className="app-main">
+        {currentView === 'analysis' && <AnalysisView />}
+        {currentView === 'home' && (
         <section className="controls">
           <h2>Processing Controls</h2>
 
