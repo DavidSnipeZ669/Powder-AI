@@ -70,6 +70,11 @@ const api: PowderAPI = {
     status: () => ipcRenderer.invoke('engine:status'),
     restart: () => ipcRenderer.invoke('engine:restart'),
   },
+  script: {
+    execute: (args) => ipcRenderer.invoke('script:execute', args),
+    eval: (args) => ipcRenderer.invoke('script:eval', args),
+    call: (args) => ipcRenderer.invoke('script:call', args),
+  },
   events: {
     onProgressUpdate: (callback) => {
       const listener = (_event: IpcRendererEvent, data: any) => {
