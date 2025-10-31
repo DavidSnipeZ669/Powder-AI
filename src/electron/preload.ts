@@ -21,6 +21,12 @@ interface EngineAPI {
   restart: () => Promise<any>;
 }
 
+interface ScriptAPI {
+  execute: (args: Record<string, any>) => Promise<any>;
+  eval: (args: Record<string, any>) => Promise<any>;
+  call: (args: Record<string, any>) => Promise<any>;
+}
+
 interface EventAPI {
   onProgressUpdate: (
     callback: (data: any) => void
