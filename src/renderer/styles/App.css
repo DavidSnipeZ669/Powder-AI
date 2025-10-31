@@ -241,11 +241,28 @@ progress::-moz-progress-bar {
 @media (max-width: 768px) {
   .app-header {
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
   }
 
   .app-header h1 {
     font-size: 20px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .app-nav {
+    width: 100%;
+    justify-content: space-around;
+  }
+
+  .nav-button {
+    flex: 1;
+    text-align: center;
+  }
+
+  .status-indicator {
+    width: 100%;
+    justify-content: center;
   }
 
   section {
