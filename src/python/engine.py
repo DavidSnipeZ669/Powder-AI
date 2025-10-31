@@ -14,6 +14,9 @@ from datetime import datetime
 import os
 from pathlib import Path
 
+# Import Lua processor
+from processors.lua_processor import LuaProcessor, LuaExecutionMode
+
 # Setup logging
 log_dir = Path.home() / '.powder-ai' / 'logs'
 log_dir.mkdir(parents=True, exist_ok=True)
