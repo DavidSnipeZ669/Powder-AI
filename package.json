@@ -1,0 +1,50 @@
+{
+  "name": "powder-ai",
+  "version": "0.1.0",
+  "description": "Cross-platform desktop application for media processing and AI model inference",
+  "main": "src/electron/main.ts",
+  "homepage": "./",
+  "type": "module",
+  "scripts": {
+    "dev": "electron-dev",
+    "build": "tsc && electron-builder",
+    "start": "npm run dev",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "better-sqlite3": "^9.2.2",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "electron-dev": "^1.0.1",
+    "typescript": "^5.3.3",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/node": "^20.10.6",
+    "@types/jest": "^29.5.8",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "@typescript-eslint/eslint-plugin": "^6.16.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0"
+  },
+  "build": {
+    "appId": "com.powder-ai.app",
+    "productName": "Powder-AI",
+    "files": [
+      "src/**/*",
+      "public/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "public",
+      "output": "dist"
+    }
+  }
+}
