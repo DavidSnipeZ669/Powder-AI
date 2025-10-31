@@ -101,6 +101,10 @@ class PythonEngine:
                 self.cmd_script_eval(args, request_id)
             elif command == 'script:call':
                 self.cmd_script_call(args, request_id)
+            elif command == 'game:analyze':
+                self.cmd_game_analyze(args, request_id)
+            elif command == 'game:list':
+                self.cmd_game_list(args, request_id)
             else:
                 error_msg = f'Unknown command: {command}'
                 logger.warning(error_msg)
