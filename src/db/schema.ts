@@ -3,6 +3,7 @@ import * as path from 'path';
 import * as os from 'os';
 import * as fs from 'fs';
 import winston from 'winston';
+import { runMigrations } from './migrations';
 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
