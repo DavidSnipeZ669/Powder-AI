@@ -6,7 +6,7 @@ import winston from 'winston';
 import { pythonBridge } from './python-bridge';
 import { registerCommandHandlers } from './ipc/commands';
 import { setupEventHandlers } from './ipc/events';
-import { initializeDatabase } from '../db/schema';
+import { initializeDatabase, setDatabase } from '../db/schema';
 
 // Setup logging
 const logDir = path.join(os.homedir(), '.powder-ai', 'logs');
