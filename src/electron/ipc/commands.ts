@@ -26,6 +26,8 @@ export const IPC_COMMANDS = {
   SCRIPT_EXECUTE: 'script:execute',
   SCRIPT_EVAL: 'script:eval',
   SCRIPT_CALL: 'script:call',
+  GAME_ANALYZE: 'game:analyze',
+  GAME_LIST: 'game:list',
 } as const;
 
 /**
