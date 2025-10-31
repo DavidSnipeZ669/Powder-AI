@@ -27,6 +27,11 @@ interface ScriptAPI {
   call: (args: Record<string, any>) => Promise<any>;
 }
 
+interface GameAPI {
+  analyze: (args: Record<string, any>) => Promise<any>;
+  list: () => Promise<any>;
+}
+
 interface EventAPI {
   onProgressUpdate: (
     callback: (data: any) => void
