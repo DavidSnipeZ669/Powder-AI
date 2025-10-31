@@ -110,57 +110,59 @@ export const App: React.FC = () => {
       <main className="app-main">
         {currentView === 'analysis' && <AnalysisView />}
         {currentView === 'home' && (
-        <section className="controls">
-          <h2>Processing Controls</h2>
+          <>
+            <section className="controls">
+              <h2>Processing Controls</h2>
 
-          <div className="button-group">
-            <button
-              onClick={handleStartProcess}
-              disabled={engineStatus !== 'ready'}
-              className="btn btn-primary"
-            >
-              Start Processing
-            </button>
+              <div className="button-group">
+                <button
+                  onClick={handleStartProcess}
+                  disabled={engineStatus !== 'ready'}
+                  className="btn btn-primary"
+                >
+                  Start Processing
+                </button>
 
-            {engineStatus === 'crashed' && (
-              <button
-                onClick={handleRestartEngine}
-                className="btn btn-warning"
-              >
-                Restart Engine
-              </button>
+                {engineStatus === 'crashed' && (
+                  <button
+                    onClick={handleRestartEngine}
+                    className="btn btn-warning"
+                  >
+                    Restart Engine
+                  </button>
+                )}
+              </div>
+
+              {processingProgress > 0 && processingProgress < 100 && (
+                <div className="progress-section">
+                  <label>Progress: {processingProgress}%</label>
+                  <progress value={processingProgress} max={100} />
+                </div>
+              )}
+            </section>
+
+            {errorMessage && (
+              <section className="error-section">
+                <h3>Error</h3>
+                <p>{errorMessage}</p>
+                <button
+                  onClick={() => setErrorMessage('')}
+                  className="btn btn-secondary"
+                >
+                  Dismiss
+                </button>
+              </section>
             )}
-          </div>
 
-          {processingProgress > 0 && processingProgress < 100 && (
-            <div className="progress-section">
-              <label>Progress: {processingProgress}%</label>
-              <progress value={processingProgress} max={100} />
-            </div>
-          )}
-        </section>
-
-        {errorMessage && (
-          <section className="error-section">
-            <h3>Error</h3>
-            <p>{errorMessage}</p>
-            <button
-              onClick={() => setErrorMessage('')}
-              className="btn btn-secondary"
-            >
-              Dismiss
-            </button>
-          </section>
-        )}
-
-        <section className="info-section">
-          <h2>Application Information</h2>
-          <ul>
-            <li>Version: 0.1.0</li>
-            <li>Platform: {typeof navigator !== 'undefined' ? navigator.platform : 'Unknown'}</li>
-            <li>Status: Engine {engineStatus}</li>
-          </ul>
-        </section>
+            <section className="info-section">
+              <h2>Application Information</h2>
+              <ul>
+                <li>Version: 0.1.0</li>
+                <li>Platform: {typeof navigator !== 'undefined' ? navigator.platform : 'Unknown'}</li>
+                <li>Status: Engine {engineStatus}</li>
+              </ul>
+            </section>
+          </>
         )}
       </main>
 
