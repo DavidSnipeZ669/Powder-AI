@@ -157,7 +157,8 @@ async function onAppReady(): Promise<void> {
     logger.info('Data directories initialized');
 
     // Initialize database
-    await initializeDatabase();
+    const db = await initializeDatabase();
+    setDatabase(db);
     logger.info('Database initialized');
 
     // Start Python engine
